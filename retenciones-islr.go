@@ -9,7 +9,7 @@ import (
 type RetencionISLR struct {
 	ID            uint        `gorm:"primarykey" json:"id,omitempty"`
 	ConjuntoRifID uint        `gorm:"notNull;uniqueIndex:ret_islr_unique" json:"conjuntoRifId"`
-	Mes           uint        `gorm:"notNull" json:"mes"`
+	Mes           uint        `gorm:"notNull;uniqueIndex:ret_islr_unique" json:"mes"`
 	Dia           uint        `gorm:"notNull" json:"dia"`
 	ConjuntoRif   ConjuntoRif `gorm:"references:ID" json:"conjuntoRif,omitempty"`
 }
