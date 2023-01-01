@@ -16,5 +16,6 @@ func GetDBInstance() *gorm.DB {
 func InitDB() {
 	GetDBInstance().AutoMigrate(
 		&Empresa{},
+		&Impuesto{},
 	)
 }

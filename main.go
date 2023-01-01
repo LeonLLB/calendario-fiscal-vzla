@@ -17,6 +17,7 @@ func main() {
 	app := NewApp()
 	// Create the instances that are getting binded
 	empresa := Empresa{}
+	impuesto := Impuesto{}
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -29,6 +30,7 @@ func main() {
 		Bind: []interface{}{
 			app,
 			&empresa,
+			&impuesto,
 		},
 	})
 
