@@ -14,11 +14,11 @@ type Impuesto struct {
 	Dia        uint `gorm:"notNull" json:"dia"`
 }
 
-func (i *Impuesto) Assign(bdto []Impuesto) map[string]interface{} {
+func (i *Impuesto) Assign(quincena uint, bdto []Impuesto) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
 		impuestos := bdto
-		dr := db.Where("1 = 1").Delete(&Impuesto{})
+		dr := db.Where("quincena", quincena).Delete(&Impuesto{})
 		if dr.Error != nil {
 			m["error"] = dr.Error
 			return dr.Error
