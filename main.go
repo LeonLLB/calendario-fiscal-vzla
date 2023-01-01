@@ -21,10 +21,11 @@ func main() {
 	conjuntoRif := ConjuntoRif{}
 	retencionISLR := RetencionISLR{}
 	liquidacion := Liquidacion{}
+	granPatrimonio := GranPatrimonio{}
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:            "calendario-fiscal-vzlaf",
+		Title:            "Calendario Fiscal: Venezuela",
 		Width:            1024,
 		Height:           768,
 		Assets:           assets,
@@ -37,6 +38,7 @@ func main() {
 			&conjuntoRif,
 			&retencionISLR,
 			&liquidacion,
+			&granPatrimonio,
 		},
 	})
 
