@@ -18,6 +18,7 @@ func main() {
 	// Create the instances that are getting binded
 	empresa := Empresa{}
 	impuesto := Impuesto{}
+	conjuntoRif := ConjuntoRif{}
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -31,6 +32,7 @@ func main() {
 			app,
 			&empresa,
 			&impuesto,
+			&conjuntoRif,
 		},
 	})
 

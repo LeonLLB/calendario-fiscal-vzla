@@ -17,5 +17,6 @@ func InitDB() {
 	GetDBInstance().AutoMigrate(
 		&Empresa{},
 		&Impuesto{},
+		&ConjuntoRif{},
 	)
 }
