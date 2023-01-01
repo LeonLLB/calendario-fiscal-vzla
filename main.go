@@ -20,6 +20,7 @@ func main() {
 	impuesto := Impuesto{}
 	conjuntoRif := ConjuntoRif{}
 	retencionISLR := RetencionISLR{}
+	liquidacion := Liquidacion{}
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -35,6 +36,7 @@ func main() {
 			&impuesto,
 			&conjuntoRif,
 			&retencionISLR,
+			&liquidacion,
 		},
 	})
 

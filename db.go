@@ -19,5 +19,6 @@ func InitDB() {
 		&Impuesto{},
 		&ConjuntoRif{},
 		&RetencionISLR{},
+		&Liquidacion{},
 	)
 }
