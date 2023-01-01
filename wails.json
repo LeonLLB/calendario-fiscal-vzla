@@ -1,6 +1,6 @@
 {
-  "name": "calendario-fiscal-vzlaf",
-  "outputfilename": "calendario-fiscal-vzlaf",
+  "name": "calendario-fiscal-vzla",
+  "outputfilename": "calendario-fiscal-vzla",
   "frontend:install": "yarn",
   "frontend:build": "yarn build",
   "frontend:dev:watcher": "yarn dev",
