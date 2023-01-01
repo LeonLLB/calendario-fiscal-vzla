@@ -38,7 +38,7 @@ func (ri *RetencionISLR) Assign(cri uint, bdto []RetencionISLR) map[string]inter
 func (ri *RetencionISLR) GetAll() []RetencionISLR {
 	db := GetDBInstance()
 	var retIslrs []RetencionISLR
-	r := db.Find(&retIslrs)
+	r := db.Preload("ConjuntoRif").Find(&retIslrs)
 	if r.Error != nil {
 		fmt.Print(r.Error)
 	}
