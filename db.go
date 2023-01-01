@@ -18,5 +18,6 @@ func InitDB() {
 		&Empresa{},
 		&Impuesto{},
 		&ConjuntoRif{},
+		&RetencionISLR{},
 	)
 }

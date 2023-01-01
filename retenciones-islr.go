@@ -6,24 +6,24 @@ import (
 	"gorm.io/gorm"
 )
 
-type Impuesto struct {
-	ID         uint `gorm:"primarykey" json:"id,omitempty"`
-	Quincena   uint `gorm:"notNull" json:"quincena"`
-	InicialRif uint `gorm:"notNull;unique" json:"inicialRif"`
-	Mes        uint `gorm:"notNull" json:"mes"`
-	Dia        uint `gorm:"notNull" json:"dia"`
+type RetencionISLR struct {
+	ID            uint        `gorm:"primarykey" json:"id,omitempty"`
+	ConjuntoRifID uint        `gorm:"notNull;uniqueIndex:ret_islr_unique" json:"conjuntoRifId"`
+	Mes           uint        `gorm:"notNull" json:"mes"`
+	Dia           uint        `gorm:"notNull" json:"dia"`
+	ConjuntoRif   ConjuntoRif `gorm:"references:ID" json:"conjuntoRif,omitempty"`
 }
 
-func (i *Impuesto) Assign(quincena uint, bdto []Impuesto) map[string]interface{} {
+func (ri *RetencionISLR) Assign(cri uint, bdto []RetencionISLR) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
-		impuestos := bdto
-		dr := db.Where("quincena", quincena).Delete(&Impuesto{})
+		retIslr := bdto
+		dr := db.Where(&RetencionISLR{ConjuntoRifID: cri}).Delete(&RetencionISLR{})
 		if dr.Error != nil {
 			m["error"] = dr.Error
 			return dr.Error
 		}
-		cr := db.Create(&impuestos)
+		cr := db.Create(&retIslr)
 		if cr.Error != nil {
 			m["error"] = cr.Error
 			return cr.Error
@@ -35,19 +35,19 @@ func (i *Impuesto) Assign(quincena uint, bdto []Impuesto) map[string]interface{}
 	return m
 }
 
-func (i *Impuesto) GetAll() []Impuesto {
+func (ri *RetencionISLR) GetAll() []RetencionISLR {
 	db := GetDBInstance()
-	var impuestos []Impuesto
-	r := db.Find(&impuestos)
+	var retIslrs []RetencionISLR
+	r := db.Find(&retIslrs)
 	if r.Error != nil {
 		fmt.Print(r.Error)
 	}
-	return impuestos
+	return retIslrs
 }
 
-func (i *Impuesto) DeleteAll() map[string]interface{} {
+func (ri *RetencionISLR) DeleteAll() map[string]interface{} {
 	db := GetDBInstance()
-	r := db.Where("1 = 1").Delete(&Impuesto{})
+	r := db.Where("1 = 1").Delete(&RetencionISLR{})
 	m := make(map[string]interface{})
 	if r.Error != nil {
 		m["error"] = r.Error
