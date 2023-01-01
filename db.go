@@ -14,5 +14,7 @@ func GetDBInstance() *gorm.DB {
 }
 
 func InitDB() {
-	GetDBInstance().AutoMigrate()
+	GetDBInstance().AutoMigrate(
+		&Empresa{},
+	)
 }
