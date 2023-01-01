@@ -28,6 +28,7 @@ func main() {
 		Title:            "Calendario Fiscal: Venezuela",
 		Width:            1024,
 		Height:           768,
+		DisableResize:    true,
 		Assets:           assets,
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
