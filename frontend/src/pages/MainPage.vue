@@ -1,3 +1,3 @@
 <template>
-    <v-container>Hi!</v-container>
+    <v-container>SECCION POR HACER</v-container>
 </template>

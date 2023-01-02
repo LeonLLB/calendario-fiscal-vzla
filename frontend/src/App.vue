@@ -1,19 +1,32 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRouter } from 'vue-router'
   const drawer = ref(false)
+  const router = useRouter()
 
   const items  = [
     {title:'Principal',value:'/'},
-    {title:'Empresas',value:'/'},
-    {title:'Impuestos',value:'/'},
-    {title:'Retencios del ISLR',value:'/'},
-    {title:'Autoliquidación anual',value:'/'},
-    {title:'Grandes Patrimonios',value:'/'},
-    {title:'Configuración',value:'/'},
+    {title:'Empresas',value:'/empresas'},
+    {title:'Impuestos',value:'/impuestos'},
+    {title:'Retencios del ISLR',value:'/retenciones'},
+    {title:'Autoliquidación anual',value:'/liquidaciones'},
+    {title:'Grandes Patrimonios',value:'/patrimonios'},
+    {title:'Configuración',value:'/configuracion'},
   ]
 
-  const onItemClick = (item: any) => console.log(item)
+  const onItemClick = (item: any) => {
+    router.push(item.id)
+    drawer.value = false
+  }
+
 </script>
+
+<style>
+.v-list-item--nav .v-list-item-title{
+  font-size: 1rem !important;
+}
+
+</style>
 
 <template>
   <v-app>
@@ -30,6 +43,7 @@
       temporary
     >
       <v-list
+        nav
         @click:select="onItemClick"
         :items="items"
       >
