@@ -6,6 +6,10 @@ export function Create(arg1) {
   return window['go']['main']['ConjuntoRif']['Create'](arg1);
 }
 
+export function GetAll() {
+  return window['go']['main']['ConjuntoRif']['GetAll']();
+}
+
 export function GetOne(arg1) {
   return window['go']['main']['ConjuntoRif']['GetOne'](arg1);
 }

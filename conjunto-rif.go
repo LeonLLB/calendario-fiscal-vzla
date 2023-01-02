@@ -29,14 +29,24 @@ func (cr *ConjuntoRif) Create(dto ConjuntoRif) map[string]interface{} {
 	return m
 }
 
-func (cr *ConjuntoRif) GetOne(id uint) Empresa {
+func (cr *ConjuntoRif) GetOne(id uint) ConjuntoRif {
 	db := GetDBInstance()
-	emp := Empresa{ID: id}
-	r := db.First(&emp)
+	crif := ConjuntoRif{ID: id}
+	r := db.First(&crif)
 	if r.Error != nil {
 		fmt.Print(r.Error)
 	}
-	return emp
+	return crif
+}
+
+func (cr *ConjuntoRif) GetAll() []ConjuntoRif {
+	db := GetDBInstance()
+	crif := []ConjuntoRif{}
+	r := db.Find(&crif)
+	if r.Error != nil {
+		fmt.Print(r.Error)
+	}
+	return crif
 }
 
 func (cr *ConjuntoRif) Update(id uint, dtocr ConjuntoRif) map[string]interface{} {
