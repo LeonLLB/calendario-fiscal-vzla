@@ -14,10 +14,6 @@ export function GetAll() {
   return window['go']['main']['Empresa']['GetAll']();
 }
 
-export function GetOne(arg1) {
-  return window['go']['main']['Empresa']['GetOne'](arg1);
-}
-
 export function Update(arg1, arg2) {
   return window['go']['main']['Empresa']['Update'](arg1, arg2);
 }

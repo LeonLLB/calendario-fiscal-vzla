@@ -5,7 +5,6 @@
                 <tr>
                     <th>Primer Terminal</th>
                     <th>Segunda Terminal</th>
-                    <!-- <th></th> -->
                 </tr>
             </thead>
             <tbody>

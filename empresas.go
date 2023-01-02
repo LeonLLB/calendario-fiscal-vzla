@@ -39,16 +39,6 @@ func (e *Empresa) GetAll() []Empresa {
 	return empresas
 }
 
-func (e *Empresa) GetOne(id uint) Empresa {
-	db := GetDBInstance()
-	emp := Empresa{ID: id}
-	r := db.First(&emp)
-	if r.Error != nil {
-		fmt.Print(r.Error)
-	}
-	return emp
-}
-
 func (e *Empresa) Update(id uint, dtoe Empresa) map[string]interface{} {
 	db := GetDBInstance()
 	m := make(map[string]interface{})

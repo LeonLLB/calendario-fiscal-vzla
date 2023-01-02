@@ -1,17 +1,21 @@
 
 export interface DBCoreResponse{
     error?: string
-    id?: number
     rows?: number
+}
+
+interface DBID{
+    id?: number
+}
+
+export interface DBCreateResponse extends DBCoreResponse, DBID {
+    
+}
+
+export interface DBUpdateResponse extends DBCoreResponse, DBID {
 
 }
 
-export interface DBCreateResponse extends DBCoreResponse {
-
-
-}
-
-export interface DBUpdateResponse extends DBCoreResponse {
-
-
+export interface DBDeleteResponse extends DBCoreResponse {
+    ok?: boolean
 }
