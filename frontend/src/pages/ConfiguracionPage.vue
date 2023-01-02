@@ -3,8 +3,8 @@
         <v-table @vnode-before-mount="getConjuntos">
             <thead>
                 <tr>
-                    <th>Primer Culminante</th>
-                    <th>Segunda Culminante</th>
+                    <th>Primer Terminal</th>
+                    <th>Segunda Terminal</th>
                     <!-- <th></th> -->
                 </tr>
             </thead>
@@ -22,12 +22,33 @@
             <v-icon color="rgba(20,20,20,0.25)" icon="mdi-information"></v-icon>
             <span style="margin-left: .5rem; color: rgba(20,20,20,0.65)">Si quiere modificar o asignar un conjunto de rif, haga click en la fila del conjunto que desea asignar o modificar    </span> 
         </v-container>
+        <div class="text-center ma-2">
+            <v-btn color="red-darken-2" @click.stop="isResetDialogOpen = true">Resetear conjuntos</v-btn>
+        </div>
         <v-dialog
             v-model="isDialogOpen"
             persistent
             @vnode-unmounted="isDialogOpen = false"
         >
             <ConjuntoRifForm :conjunto-seleccionado="conjuntoSeleccionado" @close="isDialogOpen = false" @error="onDBError" @form-error="onFormError" @success="onFormSuccess" ></ConjuntoRifForm>
+        </v-dialog>
+        <v-dialog
+            v-model="isResetDialogOpen"
+            @vnode-unmounted="isResetDialogOpen = false"
+        >
+            <v-card>
+                <v-card-title>
+                    <span class="text-h5">Resetear terminales de RIFS</span>
+                </v-card-title>
+                <v-card-text>
+                    Esta seguro de querer resetear los terminales de RIF? Esto eliminará cualquier calendario relacionado con el
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn variant="text" color="red-darken-1" @click.stop="resetConjuntos">Eliminar</v-btn>
+                    <v-btn variant="text" color="blue-darken-1" @click.stop="isResetDialogOpen = false">Cancelar</v-btn>
+                </v-card-actions>
+            </v-card>
         </v-dialog>
     </v-container>
     <v-snackbar
@@ -45,6 +66,7 @@ import ConjuntoRifForm from '../components/ConjuntoRifForm.vue';
 import { conjuntoRifController } from '../controllers/ConjuntoRif';
     
     const isDialogOpen = ref(false)
+    const isResetDialogOpen = ref(false)
     const conjuntoSeleccionado: Ref<undefined | ConjuntoRif> = ref(undefined)
 
     const defData = [
@@ -90,6 +112,15 @@ import { conjuntoRifController } from '../controllers/ConjuntoRif';
             for (let i = 0; i < res.length; i++) {
                 data.value[i] = res[i];                
             }
+        })
+    }
+
+    const resetConjuntos = () => {
+        isResetDialogOpen.value = false
+        conjuntoRifController.Reset().then(res=>{
+            snackbarText.value = res.error ? `${res.error}` : 'Conjuntos y base de datos reseatada con exito'
+            if(!res.error) data.value = [...defData]
+            isSnackbarOpen.value = true
         })
     }
 

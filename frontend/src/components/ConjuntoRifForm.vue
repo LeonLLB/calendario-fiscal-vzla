@@ -1,16 +1,16 @@
 <template>
     <v-card>
         <v-card-title>
-            <span class="text-h5">Conjunto de culminales de RIF</span>
+            <span class="text-h5">Conjunto de terminal de RIF</span>
         </v-card-title>
         <v-card-text @vnode-before-mount="seedForm">
             <v-container>
                 <v-row>
                     <v-col>
-                        <v-text-field v-model="data.rif1" :rules="inputRules" type="number"  label="Primer culminal" required></v-text-field>
+                        <v-text-field v-model="data.rif1" :rules="inputRules" type="number"  label="Primer terminal" required></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-text-field v-model="data.rif2" :rules="inputRules" type="number" label="Segundo culminal" required></v-text-field>
+                        <v-text-field v-model="data.rif2" :rules="inputRules" type="number" label="Segundo terminal" required></v-text-field>
                     </v-col>                    
                 </v-row>
             </v-container>

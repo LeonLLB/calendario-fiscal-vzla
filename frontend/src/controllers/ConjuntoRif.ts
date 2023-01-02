@@ -1,6 +1,6 @@
 import { ConjuntoRif } from "../interfaces/ConjuntoRif";
 import * as conjuntoRifBackend from '../../wailsjs/go/main/ConjuntoRif'
-import { DBCreateResponse, DBUpdateResponse } from "../interfaces/Responses";
+import { DBCoreResponse, DBCreateResponse, DBUpdateResponse } from "../interfaces/Responses";
 
 class ConjuntoRifController {
 
@@ -11,8 +11,8 @@ class ConjuntoRifController {
     async GetAll(): Promise<ConjuntoRif[]>{
         return conjuntoRifBackend.GetAll()
     }
-    GetOne(id: number){
-
+    async Reset(): Promise<DBCoreResponse>{
+        return conjuntoRifBackend.Reset()
     }
     async Update(id: number, dto: ConjuntoRif){
         return conjuntoRifBackend.Update(id,dto)

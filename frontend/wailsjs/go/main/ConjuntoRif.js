@@ -10,8 +10,8 @@ export function GetAll() {
   return window['go']['main']['ConjuntoRif']['GetAll']();
 }
 
-export function GetOne(arg1) {
-  return window['go']['main']['ConjuntoRif']['GetOne'](arg1);
+export function Reset() {
+  return window['go']['main']['ConjuntoRif']['Reset']();
 }
 
 export function Update(arg1, arg2) {

@@ -29,16 +29,6 @@ func (cr *ConjuntoRif) Create(dto ConjuntoRif) map[string]interface{} {
 	return m
 }
 
-func (cr *ConjuntoRif) GetOne(id uint) ConjuntoRif {
-	db := GetDBInstance()
-	crif := ConjuntoRif{ID: id}
-	r := db.First(&crif)
-	if r.Error != nil {
-		fmt.Print(r.Error)
-	}
-	return crif
-}
-
 func (cr *ConjuntoRif) GetAll() []ConjuntoRif {
 	db := GetDBInstance()
 	crif := []ConjuntoRif{}
@@ -64,5 +54,26 @@ func (cr *ConjuntoRif) Update(id uint, dtocr ConjuntoRif) map[string]interface{}
 		m["id"] = id
 		m["rows"] = r.RowsAffected
 	}
+	return m
+}
+
+func (cr *ConjuntoRif) Reset() map[string]interface{} {
+	db := GetDBInstance()
+	m := make(map[string]interface{})
+
+	db.Transaction(func(db *gorm.DB) error {
+		r := db.
+			Where("1 = 1").
+			Delete(&ConjuntoRif{})
+
+		if r.Error != nil {
+			m["error"] = r.Error
+			return r.Error
+		} else {
+			m["rows"] = r.RowsAffected
+			return nil
+		}
+	})
+
 	return m
 }
