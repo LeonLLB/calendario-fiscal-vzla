@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            <span class="text-h5">Asignar fecha de liquidaciones del año anterior</span>
+            <span class="text-h5">Asignar fecha de declaracion de los grandes patrimonios para los RIFS terminales en {{ conjuntoRif!.rif1 }} y {{ conjuntoRif!.rif2 }}</span>
         </v-card-title>
         <v-card-text @vnode-before-mount="seedForm">
             <v-container>         
