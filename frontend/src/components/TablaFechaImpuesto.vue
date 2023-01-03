@@ -17,25 +17,32 @@
             <th>OCT</th>
             <th>NOV</th>
             <th>DIC</th>
+            <th>Clientes</th>
+            <th>Editar</th>
         </thead>
         <tbody>
-            <tr
-                @click.stop="()=>onRowClick(fecha)"
+            <tr                
                 v-for="fecha in data"
             >
                 <td>{{ fecha.terminal_rif }}</td>
-                <td>{{ fecha.enero !== 0 ? fecha.enero : 'N/A' }}</td>
-                <td>{{ fecha.febrero !== 0 ? fecha.febrero : 'N/A' }}</td>
-                <td>{{ fecha.marzo !== 0 ? fecha.marzo : 'N/A' }}</td>
-                <td>{{ fecha.abril !== 0 ? fecha.abril : 'N/A' }}</td>
-                <td>{{ fecha.mayo !== 0 ? fecha.mayo : 'N/A' }}</td>
-                <td>{{ fecha.junio !== 0 ? fecha.junio : 'N/A' }}</td>
-                <td>{{ fecha.julio !== 0 ? fecha.julio : 'N/A' }}</td>
-                <td>{{ fecha.agosto !== 0 ? fecha.agosto : 'N/A' }}</td>
-                <td>{{ fecha.septiembre !== 0 ? fecha.septiembre : 'N/A' }}</td>
-                <td>{{ fecha.octubre !== 0 ? fecha.octubre : 'N/A' }}</td>
-                <td>{{ fecha.noviembre !== 0 ? fecha.noviembre : 'N/A' }}</td>
-                <td>{{ fecha.diciembre !== 0 ? fecha.diciembre : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.enero,1)">{{ fecha.enero !== 0 ? fecha.enero : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.febrero,2)">{{ fecha.febrero !== 0 ? fecha.febrero : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.marzo,3)">{{ fecha.marzo !== 0 ? fecha.marzo : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.abril,4)">{{ fecha.abril !== 0 ? fecha.abril : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.mayo,5)">{{ fecha.mayo !== 0 ? fecha.mayo : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.junio,6)">{{ fecha.junio !== 0 ? fecha.junio : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.julio,7)">{{ fecha.julio !== 0 ? fecha.julio : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.agosto,8)">{{ fecha.agosto !== 0 ? fecha.agosto : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.septiembre,9)">{{ fecha.septiembre !== 0 ? fecha.septiembre : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.octubre,10)">{{ fecha.octubre !== 0 ? fecha.octubre : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.noviembre,11)">{{ fecha.noviembre !== 0 ? fecha.noviembre : 'N/A' }}</td>
+                <td :class="getColorCode(fecha.diciembre,12)">{{ fecha.diciembre !== 0 ? fecha.diciembre : 'N/A' }}</td>
+                <td>
+                    <v-icon @click.stop="()=>onEmpresaClick(fecha.terminal_rif)" style="cursor: pointer;">mdi-eye</v-icon>
+                </td>
+                <td>
+                    <v-icon @click.stop="()=>onAssignClick(fecha)" style="cursor: pointer;">mdi-pencil</v-icon>
+                </td>
             </tr>
         </tbody>
     </v-table>
@@ -51,9 +58,17 @@
             @success="onFormSuccess"
         ></FechaImpuestoForm>
     </v-dialog>
+    <v-dialog
+        v-model="isDialogEmpresaOpen"
+        @vnode-unmounted="isDialogEmpresaOpen = false"
+    >
+        <EmpresasDialog
+            :terminal-rif="terminalRifSeleccionado"
+        ></EmpresasDialog>
+    </v-dialog>
     <v-container>
         <v-icon color="rgba(20,20,20,0.25)" icon="mdi-information"></v-icon>
-        <span style="margin-left: .5rem; color: rgba(20,20,20,0.65)">Si quiere modificar o asignar una fecha para declaracion, haga click en la fila que desea asignar o modificar    </span> 
+        <span style="margin-left: .5rem; color: rgba(20,20,20,0.65)">Si quiere modificar o asignar una fecha para declaracion, haga click en la opcion de editar en la fila con las fechas que desea asignar o modificar    </span> 
     </v-container>
 </template>
 
@@ -61,20 +76,41 @@
     import {Ref, ref} from 'vue'
 import { impuestoController } from '../controllers/Impuestos';
     import { FechaImpuestos } from '../interfaces/Impuestos';
+import EmpresasDialog from './EmpresasDialog.vue';
 import FechaImpuestoForm from './FechaImpuestoForm.vue';
 
     const data: Ref<FechaImpuestos[]> = ref([...impuestoController.defSeed()])
     const fechaSeleccionada: Ref<FechaImpuestos | undefined> = ref()
 
     const isDialogFormOpen = ref(false)
+    const isDialogEmpresaOpen = ref(false)
+    const terminalRifSeleccionado = ref('')
 
     const props = defineProps({
         quincena:Number
-    })
+    })   
 
-    const onRowClick = (fecha: FechaImpuestos) => {
+    const getColorCode = (dia:number,mes:number): (string | undefined) => {
+        if(dia === 0) return
+        const actualDate = new Date()
+        const dateToCompare = new Date(actualDate.getFullYear(),mes-1,dia)
+        const timeDifference = (dateToCompare.getTime() / 1000 / 60 / 60 / 24) - (actualDate.getTime() / 1000 / 60 / 60 / 24) 
+        //CASO 1: SI LA FECHA ESTA ENTRE 3 DIAS CON LA PASADA
+        if (timeDifference <= 3 && timeDifference >= 1) return 'bg-green-darken-1'
+        // CASO 2: SI LA FECHA ESTA ENTRE 1 DIA CON LA PASADA
+        if(timeDifference < 1) return 'bg-yellow-darken-1'
+        // CASO 3: SI LA FECHA ES HOY
+        if(actualDate.getDate() === dateToCompare.getDate() && actualDate.getDate() === dateToCompare.getMonth()) return 'bg-red-darken-1'
+    }
+
+    const onAssignClick = (fecha: FechaImpuestos) => {
         fechaSeleccionada.value = fecha
         isDialogFormOpen.value = true
+    }
+
+    const onEmpresaClick = (terminal: number) => {
+        terminalRifSeleccionado.value = `${terminal}`
+        isDialogEmpresaOpen.value = true
     }
     
     const onFormError = () => {
@@ -94,7 +130,6 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
     const onDBError = (error: any) => {
         snackbarText.value = `${error}`
         isSnackbarOpen.value = true
-        console.log(error)
     }
 
     const prepare = () => {

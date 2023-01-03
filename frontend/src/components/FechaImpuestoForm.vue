@@ -152,7 +152,6 @@ import { FechaImpuestosClass } from '../interfaces/Impuestos';
             quincena: fechaSeleccionada!.quincena ,
             terminal_rif: fechaSeleccionada!.terminal_rif ,
         })        
-        console.log(preparedData)
         impuestoController.Assign(fechaSeleccionada!.quincena,fechaSeleccionada!.terminal_rif,preparedData)
         .then( res => {
             if(res.rows){

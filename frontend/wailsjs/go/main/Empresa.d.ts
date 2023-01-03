@@ -8,4 +8,6 @@ export function Delete(arg1:number):Promise<{[key: string]: any}>;
 
 export function GetAll():Promise<Array<main.Empresa>>;
 
+export function GetAllByTerminalRif(arg1:string):Promise<Array<main.Empresa>>;
+
 export function Update(arg1:number,arg2:main.Empresa):Promise<{[key: string]: any}>;

@@ -39,6 +39,17 @@ func (e *Empresa) GetAll() []Empresa {
 	return empresas
 }
 
+func (e *Empresa) GetAllByTerminalRif(trif string) []Empresa {
+	db := GetDBInstance()
+	var empresas []Empresa
+	fmt.Printf("%%%s", trif)
+	r := db.Where("rif LIKE ?", fmt.Sprintf("%%%s", trif)).Find(&empresas)
+	if r.Error != nil {
+		fmt.Print(r.Error)
+	}
+	return empresas
+}
+
 func (e *Empresa) Update(id uint, dtoe Empresa) map[string]interface{} {
 	db := GetDBInstance()
 	m := make(map[string]interface{})

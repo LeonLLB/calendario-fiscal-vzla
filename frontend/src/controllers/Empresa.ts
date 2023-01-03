@@ -11,6 +11,9 @@ class EmpresaController {
     async GetAll(): Promise<Empresa[]>{
         return empresaBackend.GetAll()
     }    
+    async GetAllByTerminal(terminalRif: string): Promise<Empresa[]>{
+        return empresaBackend.GetAllByTerminalRif(terminalRif)
+    }    
     async Update(id: number, dto: Empresa){
         return empresaBackend.Update(id,dto)
         .then( (res: DBUpdateResponse) => res)
