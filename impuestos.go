@@ -18,7 +18,6 @@ func (i *Impuesto) Assign(quincena uint, trif uint, bdto []Impuesto) map[string]
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
 		impuestos := bdto
-		fmt.Print(impuestos)
 		dr := db.Where(&Impuesto{Quincena: quincena, TerminalRif: trif}).Delete(&Impuesto{})
 		if dr.Error != nil {
 			m["error"] = dr.Error

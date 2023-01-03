@@ -42,7 +42,6 @@ func (e *Empresa) GetAll() []Empresa {
 func (e *Empresa) GetAllByTerminalRif(trif string) []Empresa {
 	db := GetDBInstance()
 	var empresas []Empresa
-	fmt.Printf("%%%s", trif)
 	r := db.Where("rif LIKE ?", fmt.Sprintf("%%%s", trif)).Find(&empresas)
 	if r.Error != nil {
 		fmt.Print(r.Error)
