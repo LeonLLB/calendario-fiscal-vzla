@@ -13,10 +13,10 @@ type Liquidacion struct {
 	ConjuntoRif   ConjuntoRif `gorm:"references:ID" json:"conjuntoRif,omitempty"`
 }
 
-func (l *Liquidacion) Assign(cri uint, bdto []Liquidacion) map[string]interface{} {
+func (l *Liquidacion) Assign(cri uint, dto Liquidacion) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
-		liq := bdto
+		liq := dto
 		dr := db.Where(&Liquidacion{ConjuntoRifID: cri}).Delete(&Liquidacion{})
 		if dr.Error != nil {
 			m["error"] = dr.Error

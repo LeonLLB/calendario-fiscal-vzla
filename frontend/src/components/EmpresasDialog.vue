@@ -49,7 +49,6 @@ import { ConjuntoRifClass } from '../interfaces/ConjuntoRif';
         } else if (!terminalRif && conjuntoRif){
             empresaController.GetAllByConjunto(conjuntoRif)
             .then(res=>{
-                console.log(res)
                 data.value = res
             })
         }
