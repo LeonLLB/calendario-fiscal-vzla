@@ -73,7 +73,7 @@ export namespace main {
 	export class Impuesto {
 	    id?: number;
 	    quincena: number;
-	    inicialRif: number;
+	    terminalRif: number;
 	    mes: number;
 	    dia: number;
 	
@@ -85,7 +85,7 @@ export namespace main {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.id = source["id"];
 	        this.quincena = source["quincena"];
-	        this.inicialRif = source["inicialRif"];
+	        this.terminalRif = source["terminalRif"];
 	        this.mes = source["mes"];
 	        this.dia = source["dia"];
 	    }

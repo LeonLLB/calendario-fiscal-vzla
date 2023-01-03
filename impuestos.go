@@ -7,18 +7,19 @@ import (
 )
 
 type Impuesto struct {
-	ID         uint `gorm:"primarykey" json:"id,omitempty"`
-	Quincena   uint `gorm:"notNull" json:"quincena"`
-	InicialRif uint `gorm:"notNull;unique" json:"inicialRif"`
-	Mes        uint `gorm:"notNull" json:"mes"`
-	Dia        uint `gorm:"notNull" json:"dia"`
+	ID          uint `gorm:"primarykey" json:"id,omitempty"`
+	Quincena    uint `gorm:"notNull" json:"quincena"`
+	TerminalRif uint `gorm:"notNull;uniqueIndex:unique_fecha" json:"terminalRif"`
+	Mes         uint `gorm:"notNull;uniqueIndex:unique_fecha" json:"mes"`
+	Dia         uint `gorm:"notNull" json:"dia"`
 }
 
-func (i *Impuesto) Assign(quincena uint, inrif uint, bdto []Impuesto) map[string]interface{} {
+func (i *Impuesto) Assign(quincena uint, trif uint, bdto []Impuesto) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
 		impuestos := bdto
-		dr := db.Where(&Impuesto{Quincena: quincena, InicialRif: inrif}).Delete(&Impuesto{})
+		fmt.Print(impuestos)
+		dr := db.Where(&Impuesto{Quincena: quincena, TerminalRif: trif}).Delete(&Impuesto{})
 		if dr.Error != nil {
 			m["error"] = dr.Error
 			return dr.Error

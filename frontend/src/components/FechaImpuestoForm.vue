@@ -88,8 +88,18 @@ import { FechaImpuestosClass } from '../interfaces/Impuestos';
     })
 
     const seedForm = () => {
-        // data.value.nombre = fechaSeleccionada?.nombre ? `${fechaSeleccionada?.nombre}` : ''
-        // data.value.rif = fechaSeleccionada?.rif ? `${fechaSeleccionada?.rif}` : ''
+        data.value.enero = fechaSeleccionada?.enero !== 0 ? `${fechaSeleccionada?.enero}` : ''
+        data.value.febrero = fechaSeleccionada?.febrero !== 0 ? `${fechaSeleccionada?.febrero}` : ''
+        data.value.marzo = fechaSeleccionada?.marzo !== 0 ? `${fechaSeleccionada?.marzo}` : ''
+        data.value.abril = fechaSeleccionada?.abril !== 0 ? `${fechaSeleccionada?.abril}` : ''
+        data.value.mayo = fechaSeleccionada?.mayo !== 0 ? `${fechaSeleccionada?.mayo}` : ''
+        data.value.junio = fechaSeleccionada?.junio !== 0 ? `${fechaSeleccionada?.junio}` : ''
+        data.value.julio = fechaSeleccionada?.julio !== 0 ? `${fechaSeleccionada?.julio}` : ''
+        data.value.agosto = fechaSeleccionada?.agosto !== 0 ? `${fechaSeleccionada?.agosto}` : ''
+        data.value.septiembre = fechaSeleccionada?.septiembre !== 0 ? `${fechaSeleccionada?.septiembre}` : ''
+        data.value.octubre = fechaSeleccionada?.octubre !== 0 ? `${fechaSeleccionada?.octubre}` : ''
+        data.value.noviembre = fechaSeleccionada?.noviembre !== 0 ? `${fechaSeleccionada?.noviembre}` : ''
+        data.value.diciembre = fechaSeleccionada?.diciembre !== 0 ? `${fechaSeleccionada?.diciembre}` : ''
     }
 
     const inputRules = [
@@ -104,23 +114,54 @@ import { FechaImpuestosClass } from '../interfaces/Impuestos';
         return maxDate.getDate()<31 ? 31-maxDate.getDate() : maxDate.getDate()
     }
 
+    const validateForm = (): boolean => {
+        return (
+            !data.value.enero || +data.value.enero > 0 || +data.value.enero < maxAccordingToMonth(1) ||
+            !data.value.febrero || +data.value.febrero > 0 || +data.value.febrero < maxAccordingToMonth(1) ||
+            !data.value.marzo || +data.value.enero > 0 || +data.value.enero < maxAccordingToMonth(1) ||
+            !data.value.abril || +data.value.abril > 0 || +data.value.abril < maxAccordingToMonth(1) ||
+            !data.value.mayo || +data.value.mayo > 0 || +data.value.mayo < maxAccordingToMonth(1) ||
+            !data.value.junio || +data.value.junio > 0 || +data.value.junio < maxAccordingToMonth(1) ||
+            !data.value.julio || +data.value.julio > 0 || +data.value.julio < maxAccordingToMonth(1) ||
+            !data.value.agosto || +data.value.agosto > 0 || +data.value.agosto < maxAccordingToMonth(1) ||
+            !data.value.septiembre || +data.value.septiembre > 0 || +data.value.septiembre < maxAccordingToMonth(1) ||
+            !data.value.octubre || +data.value.octubre > 0 || +data.value.octubre < maxAccordingToMonth(1) ||
+            !data.value.noviembre || +data.value.noviembre > 0 || +data.value.noviembre < maxAccordingToMonth(1) ||
+            !data.value.diciembre || +data.value.diciembre > 0 || +data.value.diciembre < maxAccordingToMonth(1)
+        )
+    }
+
     const submit = () => {
-        // if(
-        //     !data.value.nombre ||
-        //     !data.value.rif
-        // ){
-        //     emit('form-error')
-        //     return
-        // }        
-        // empresaController.Create(data.value)
-        // .then( res => {
-        //     if(res.id){
-        //         emit('close')            
-        //         emit('success',true)                  
-        //         return
-        //     } else {
-        //         emit('error',res.error)
-        //     }
-        // })
+        if(!validateForm()){
+            emit('form-error')
+            return
+        }        
+        const preparedData = impuestoController.Prepare({
+            enero: +data.value.enero,
+            febrero: +data.value.febrero,
+            marzo: +data.value.marzo,
+            abril: +data.value.abril,
+            mayo: +data.value.mayo,
+            junio: +data.value.junio,
+            julio: +data.value.julio,
+            agosto: +data.value.agosto,
+            septiembre: +data.value.septiembre,
+            octubre: +data.value.octubre,
+            noviembre: +data.value.noviembre,
+            diciembre: +data.value.diciembre,
+            quincena: fechaSeleccionada!.quincena ,
+            terminal_rif: fechaSeleccionada!.terminal_rif ,
+        })        
+        console.log(preparedData)
+        impuestoController.Assign(fechaSeleccionada!.quincena,fechaSeleccionada!.terminal_rif,preparedData)
+        .then( res => {
+            if(res.rows){
+                emit('close')            
+                emit('success',true)                  
+                return
+            } else {
+                emit('error',res.error)
+            }
+        })
     }
 </script>

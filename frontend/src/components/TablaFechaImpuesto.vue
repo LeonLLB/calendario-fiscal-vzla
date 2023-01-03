@@ -85,7 +85,7 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
     const onFormSuccess = (isCreate: boolean) => {
         snackbarText.value = isCreate ? 'Fechas de declaraciones registrada con exito!' : 'Fechas de declaraciones actualizada con exito!'
         isSnackbarOpen.value = true
-        // getEmpresas()
+        getFechas()
     }
 
     const snackbarText = ref('')
@@ -94,10 +94,22 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
     const onDBError = (error: any) => {
         snackbarText.value = `${error}`
         isSnackbarOpen.value = true
+        console.log(error)
     }
 
     const prepare = () => {
         data.value = data.value.map(item=>({...item,quincena:props.quincena!} as FechaImpuestos))
+        getFechas()
+    }
+
+    const getFechas = () => {
+        impuestoController.GetAll((props.quincena as any)).then(res=>{  
+            if(res.length === 0) {return}
+            for (let i = 0; i < res.length; i++) {
+                const dataIndex = data.value.findIndex(item => item.terminal_rif === res[i].terminal_rif)
+                data.value[dataIndex] = res[i];                
+            }
+        })
     }
 
 </script>
