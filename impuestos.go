@@ -14,11 +14,11 @@ type Impuesto struct {
 	Dia        uint `gorm:"notNull" json:"dia"`
 }
 
-func (i *Impuesto) Assign(quincena uint, bdto []Impuesto) map[string]interface{} {
+func (i *Impuesto) Assign(quincena uint, inrif uint, bdto []Impuesto) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
 		impuestos := bdto
-		dr := db.Where("quincena = ?", quincena).Delete(&Impuesto{})
+		dr := db.Where(&Impuesto{Quincena: quincena, InicialRif: inrif}).Delete(&Impuesto{})
 		if dr.Error != nil {
 			m["error"] = dr.Error
 			return dr.Error
@@ -35,19 +35,19 @@ func (i *Impuesto) Assign(quincena uint, bdto []Impuesto) map[string]interface{}
 	return m
 }
 
-func (i *Impuesto) GetAll() []Impuesto {
+func (i *Impuesto) GetAll(quincena uint) []Impuesto {
 	db := GetDBInstance()
 	var impuestos []Impuesto
-	r := db.Find(&impuestos)
+	r := db.Find(&impuestos, &Impuesto{Quincena: quincena})
 	if r.Error != nil {
 		fmt.Print(r.Error)
 	}
 	return impuestos
 }
 
-func (i *Impuesto) DeleteAll() map[string]interface{} {
+func (i *Impuesto) DeleteAllFromQuincena(quincena uint) map[string]interface{} {
 	db := GetDBInstance()
-	r := db.Where("1 = 1").Delete(&Impuesto{})
+	r := db.Where(&Impuesto{Quincena: quincena}).Delete(&Impuesto{})
 	m := make(map[string]interface{})
 	if r.Error != nil {
 		m["error"] = r.Error

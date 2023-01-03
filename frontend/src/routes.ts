@@ -9,10 +9,10 @@ import RetencionesPage from './pages/RetencionesPage.vue'
 const routes = [
     {path: '/', component: MainPage},
     {path: '/empresas', component: EmpresasPage},
-    {path: '/impuestos', component: RetencionesPage},
-    {path: '/retenciones', component: PatrimoniosPage},
-    {path: '/liquidaciones', component: ImpuestosPage},
-    {path: '/patrimonios', component: LiquidacionesPage},
+    {path: '/impuestos', component: ImpuestosPage},
+    {path: '/retenciones', component: RetencionesPage},
+    {path: '/liquidaciones', component: LiquidacionesPage},
+    {path: '/patrimonios', component: PatrimoniosPage},
     {path: '/configuracion', component: ConfiguracionPage},
 ]
 

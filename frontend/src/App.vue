@@ -8,7 +8,7 @@
     {title:'Principal',value:'/'},
     {title:'Empresas',value:'/empresas'},
     {title:'Impuestos',value:'/impuestos'},
-    {title:'Retencios del ISLR',value:'/retenciones'},
+    {title:'Retenciones del ISLR',value:'/retenciones'},
     {title:'Autoliquidación anual',value:'/liquidaciones'},
     {title:'Grandes Patrimonios',value:'/patrimonios'},
     {title:'Configuración',value:'/configuracion'},
