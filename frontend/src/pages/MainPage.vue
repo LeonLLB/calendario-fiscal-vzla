@@ -1,3 +1,3 @@
 <template>
-    <v-container>SECCION POR HACER</v-container>
+    <v-container></v-container>
 </template>
