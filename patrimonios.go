@@ -14,10 +14,10 @@ type GranPatrimonio struct {
 	ConjuntoRif   ConjuntoRif `gorm:"references:ID" json:"conjuntoRif,omitempty"`
 }
 
-func (gp *GranPatrimonio) Assign(cri uint, bdto []GranPatrimonio) map[string]interface{} {
+func (gp *GranPatrimonio) Assign(cri uint, dto GranPatrimonio) map[string]interface{} {
 	m := make(map[string]interface{})
 	GetDBInstance().Transaction(func(db *gorm.DB) error {
-		gpt := bdto
+		gpt := dto
 		dr := db.Where(&GranPatrimonio{ConjuntoRifID: cri}).Delete(&GranPatrimonio{})
 		if dr.Error != nil {
 			m["error"] = dr.Error

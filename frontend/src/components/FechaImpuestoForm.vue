@@ -69,17 +69,17 @@ import MonthForm from './MonthForm.vue';
     const validateForm = (): boolean => {
         return (
             !data.value.enero || +data.value.enero > 0 || +data.value.enero < maxAccordingToMonth(1) ||
-            !data.value.febrero || +data.value.febrero > 0 || +data.value.febrero < maxAccordingToMonth(1) ||
-            !data.value.marzo || +data.value.enero > 0 || +data.value.enero < maxAccordingToMonth(1) ||
-            !data.value.abril || +data.value.abril > 0 || +data.value.abril < maxAccordingToMonth(1) ||
-            !data.value.mayo || +data.value.mayo > 0 || +data.value.mayo < maxAccordingToMonth(1) ||
-            !data.value.junio || +data.value.junio > 0 || +data.value.junio < maxAccordingToMonth(1) ||
-            !data.value.julio || +data.value.julio > 0 || +data.value.julio < maxAccordingToMonth(1) ||
-            !data.value.agosto || +data.value.agosto > 0 || +data.value.agosto < maxAccordingToMonth(1) ||
-            !data.value.septiembre || +data.value.septiembre > 0 || +data.value.septiembre < maxAccordingToMonth(1) ||
-            !data.value.octubre || +data.value.octubre > 0 || +data.value.octubre < maxAccordingToMonth(1) ||
-            !data.value.noviembre || +data.value.noviembre > 0 || +data.value.noviembre < maxAccordingToMonth(1) ||
-            !data.value.diciembre || +data.value.diciembre > 0 || +data.value.diciembre < maxAccordingToMonth(1)
+            !data.value.febrero || +data.value.febrero > 0 || +data.value.febrero < maxAccordingToMonth(2) ||
+            !data.value.marzo || +data.value.enero > 0 || +data.value.enero < maxAccordingToMonth(3) ||
+            !data.value.abril || +data.value.abril > 0 || +data.value.abril < maxAccordingToMonth(4) ||
+            !data.value.mayo || +data.value.mayo > 0 || +data.value.mayo < maxAccordingToMonth(5) ||
+            !data.value.junio || +data.value.junio > 0 || +data.value.junio < maxAccordingToMonth(6) ||
+            !data.value.julio || +data.value.julio > 0 || +data.value.julio < maxAccordingToMonth(7) ||
+            !data.value.agosto || +data.value.agosto > 0 || +data.value.agosto < maxAccordingToMonth(8) ||
+            !data.value.septiembre || +data.value.septiembre > 0 || +data.value.septiembre < maxAccordingToMonth(9) ||
+            !data.value.octubre || +data.value.octubre > 0 || +data.value.octubre < maxAccordingToMonth(10) ||
+            !data.value.noviembre || +data.value.noviembre > 0 || +data.value.noviembre < maxAccordingToMonth(11) ||
+            !data.value.diciembre || +data.value.diciembre > 0 || +data.value.diciembre < maxAccordingToMonth(12)
         )
     }
 

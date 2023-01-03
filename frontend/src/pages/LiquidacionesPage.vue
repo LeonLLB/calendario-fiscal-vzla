@@ -58,10 +58,10 @@
     >
         <v-card>
             <v-card-title>
-                <span class="text-h5">Resetear fechas de declaracion de impuestos de la renta</span>
+                <span class="text-h5">Resetear fechas de declaracion de liquidacion</span>
             </v-card-title>
             <v-card-text>
-                Esta seguro de querer resetear las fechas de las declaraciones de impuestos de la renta?
+                Esta seguro de querer resetear las fechas de las declaraciones de liquidacion?
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
