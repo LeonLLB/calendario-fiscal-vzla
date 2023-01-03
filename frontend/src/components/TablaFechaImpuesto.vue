@@ -70,6 +70,18 @@
         <v-icon color="rgba(20,20,20,0.25)" icon="mdi-information"></v-icon>
         <span style="margin-left: .5rem; color: rgba(20,20,20,0.65)">Si quiere modificar o asignar una fecha para declaracion, haga click en la opcion de editar en la fila con las fechas que desea asignar o modificar    </span> 
     </v-container>
+    <v-container>
+        <v-icon color="rgb(20,245,20)" icon="mdi-information"></v-icon>
+        <span style="margin-left: .5rem; color: rgb(20,245,20)">Si la fecha de una declaración es verde, es que debe ser declarada en 3 días</span> 
+    </v-container>
+    <v-container>
+        <v-icon color="rgb(200,175,50)" icon="mdi-information"></v-icon>
+        <span style="margin-left: .5rem; color: rgb(200,175,50)">Si la fecha de una declaración es amarilla, es que debe ser declarada mañana</span> 
+    </v-container>
+    <v-container>
+        <v-icon color="rgb(245,20,20)" icon="mdi-information"></v-icon>
+        <span style="margin-left: .5rem; color: rgb(245,20,20)">Si la fecha de una declaración es roja, debe ser declarada hoy</span> 
+    </v-container>
 </template>
 
 <script lang="ts" setup>
