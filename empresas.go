@@ -49,6 +49,16 @@ func (e *Empresa) GetAllByTerminalRif(trif string) []Empresa {
 	return empresas
 }
 
+func (e *Empresa) GetAllByConjuntoRif(trif1 string, trif2 string) []Empresa {
+	db := GetDBInstance()
+	var empresas []Empresa
+	r := db.Where("rif LIKE ?", fmt.Sprintf("%%%s", trif1)).Or("rif LIKE ?", fmt.Sprintf("%%%s", trif2)).Find(&empresas)
+	if r.Error != nil {
+		fmt.Print(r.Error)
+	}
+	return empresas
+}
+
 func (e *Empresa) Update(id uint, dtoe Empresa) map[string]interface{} {
 	db := GetDBInstance()
 	m := make(map[string]interface{})

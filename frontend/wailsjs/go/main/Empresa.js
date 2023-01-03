@@ -14,6 +14,10 @@ export function GetAll() {
   return window['go']['main']['Empresa']['GetAll']();
 }
 
+export function GetAllByConjuntoRif(arg1, arg2) {
+  return window['go']['main']['Empresa']['GetAllByConjuntoRif'](arg1, arg2);
+}
+
 export function GetAllByTerminalRif(arg1) {
   return window['go']['main']['Empresa']['GetAllByTerminalRif'](arg1);
 }

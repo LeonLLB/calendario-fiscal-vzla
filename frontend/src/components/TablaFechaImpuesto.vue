@@ -96,15 +96,15 @@
     <div style="position: absolute; right:2rem; top:5rem">
         <div>
             <v-icon color="rgb(20,245,20)" icon="mdi-information"></v-icon>
-            <span style="margin-left: .5rem; color: rgb(20,245,20)">declará en 3 días</span> 
+            <span style="margin-left: .5rem; color: rgb(20,245,20)">Declará en 3 días</span> 
         </div>
         <div>
             <v-icon color="rgb(200,175,50)" icon="mdi-information"></v-icon>
-            <span style="margin-left: .5rem; color: rgb(200,175,50)">declará mañana</span> 
+            <span style="margin-left: .5rem; color: rgb(200,175,50)">Declará mañana</span> 
         </div>
         <div>
             <v-icon color="rgb(245,20,20)" icon="mdi-information"></v-icon>
-            <span style="margin-left: .5rem; color: rgb(245,20,20)">declará hoy</span> 
+            <span style="margin-left: .5rem; color: rgb(245,20,20)">Declará hoy</span> 
         </div>
     </div>
 </template>

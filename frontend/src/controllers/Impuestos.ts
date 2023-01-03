@@ -33,10 +33,7 @@ class ImpuestoController {
             return data
         })
     }    
-    // async Update(id: number, dto: ImpuestoFromDB){
-    //     return empresaBackend.Update(id,dto)
-    //     .then( (res: DBUpdateResponse) => res)
-    // }
+    
     async Delete(quincena: number){
         return impuestoBackend.DeleteAllFromQuincena(quincena).then((res:DBDeleteResponse)=>res)
     }

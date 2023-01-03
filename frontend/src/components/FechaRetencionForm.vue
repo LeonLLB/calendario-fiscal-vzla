@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            <span class="text-h5">Asignar fecha de declaraciones de la {{fechaSeleccionada!.quincena}}{{ fechaSeleccionada!.quincena === 1 ? 'era' : 'da' }} de los RIF terminales en {{ fechaSeleccionada!.terminal_rif }}</span>
+            <span class="text-h5">Asignar fecha de declaraciones de las retenciones de los RIF terminales en {{ fechaSeleccionada!.rif1 }} y {{ fechaSeleccionada!.rif2 }}</span>
         </v-card-title>
         <v-card-text @vnode-before-mount="seedForm">
             <MonthForm v-model="data"></MonthForm>
@@ -20,8 +20,8 @@
 
 <script lang="ts" setup>
     import { ref } from 'vue';
-import { impuestoController } from '../controllers/Impuestos';
-import { FechaImpuestosClass } from '../interfaces/Impuestos';
+import { retencionController } from '../controllers/Retenciones';
+import { FechaRetencionesClass } from '../interfaces/Retenciones';
 import MonthForm from './MonthForm.vue';
 
     const emit = defineEmits(['close','success','error','form-error'])
@@ -42,7 +42,7 @@ import MonthForm from './MonthForm.vue';
     })
 
     const {fechaSeleccionada} = defineProps({
-        fechaSeleccionada: FechaImpuestosClass,
+        fechaSeleccionada: FechaRetencionesClass,
     })
 
     const seedForm = () => {
@@ -87,8 +87,8 @@ import MonthForm from './MonthForm.vue';
         if(!validateForm()){
             emit('form-error')
             return
-        }        
-        const preparedData = impuestoController.Prepare({
+        }
+        const preparedData = retencionController.Prepare({
             enero: +data.value.enero,
             febrero: +data.value.febrero,
             marzo: +data.value.marzo,
@@ -101,10 +101,11 @@ import MonthForm from './MonthForm.vue';
             octubre: +data.value.octubre,
             noviembre: +data.value.noviembre,
             diciembre: +data.value.diciembre,
-            quincena: fechaSeleccionada!.quincena ,
-            terminal_rif: fechaSeleccionada!.terminal_rif ,
+            rif1: fechaSeleccionada!.rif1 ,
+            rif2: fechaSeleccionada!.rif2 ,
+            conjuntoId: fechaSeleccionada!.conjuntoId ,
         })        
-        impuestoController.Assign(fechaSeleccionada!.quincena,fechaSeleccionada!.terminal_rif,preparedData)
+        retencionController.Assign(fechaSeleccionada!.conjuntoId,preparedData)
         .then( res => {
             if(res.rows){
                 emit('close')            
