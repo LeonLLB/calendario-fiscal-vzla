@@ -1,15 +1,15 @@
 import { FechaImpuestos, ImpuestosFromDB } from "../interfaces/Impuestos";
-import * as empresaBackend from '../../wailsjs/go/main/Impuesto'
+import * as impuestoBackend from '../../wailsjs/go/main/Impuesto'
 import { DBCoreResponse, DBCreateResponse, DBDeleteResponse, DBUpdateResponse } from "../interfaces/Responses";
 
 class ImpuestoController {
 
     async Assign(quincena:number,terminalRif:number,dto: ImpuestosFromDB[]): Promise<DBCoreResponse>{
-        return empresaBackend.Assign(quincena,terminalRif,dto)
+        return impuestoBackend.Assign(quincena,terminalRif,dto)
         .then( (res: DBCoreResponse) => res)
     }
     async GetAll(quincena: 1 | 2): Promise<FechaImpuestos[]>{
-        return empresaBackend.GetAll(quincena).then(res=>{
+        return impuestoBackend.GetAll(quincena).then(res=>{
             if(res.length === 0) return []
             const data: FechaImpuestos[] = []            
             for (let i = 0; i <= 9; i++) {
@@ -37,9 +37,9 @@ class ImpuestoController {
     //     return empresaBackend.Update(id,dto)
     //     .then( (res: DBUpdateResponse) => res)
     // }
-    // async Delete(id: number){
-    //     return empresaBackend.Delete(id).then((res:DBDeleteResponse)=>res)
-    // }
+    async Delete(quincena: number){
+        return impuestoBackend.DeleteAllFromQuincena(quincena).then((res:DBDeleteResponse)=>res)
+    }
 
     defSeed(): FechaImpuestos[]{
         const data: FechaImpuestos[] = []

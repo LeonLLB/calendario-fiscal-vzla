@@ -2,7 +2,7 @@
     <div class="text-center">
         {{data[0].quincena === 1 ? 'Entre los días 01 al 15 de cada mes, ambos inclusive:' : 'Entre los días 16 y el último de cada mes, ambos inclusive:'}}
     </div>    
-    <v-table @vnode-before-mount="prepare">
+    <v-table @vnode-before-mount="()=>prepare()">
         <thead>
             <th>R.I.F</th>
             <th>ENE</th>
@@ -66,6 +66,33 @@
             :terminal-rif="terminalRifSeleccionado"
         ></EmpresasDialog>
     </v-dialog>
+    <v-dialog
+        v-model="isDialogResetOpen"
+        @vnode-unmounted="isDialogResetOpen = false"
+    >
+        <v-card>
+            <v-card-title>
+                <span class="text-h5">Resetear fechas de declaracion de impuestos de la {{quincena}}{{ quincena === 1 ? 'era' : 'da' }} quincena</span>
+            </v-card-title>
+            <v-card-text>
+                Esta seguro de querer resetear las fechas de las declaraciones de impuestos de la quincena especificada?
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn variant="text" color="red-darken-1" @click.stop="resetQuincena">Eliminar</v-btn>
+                <v-btn variant="text" color="blue-darken-1" @click.stop="isDialogResetOpen = false">Cancelar</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+    <v-snackbar
+      v-model="isSnackbarOpen"
+      @vnode-before-unmount="snackbarText = ''"
+    >
+      {{ snackbarText }}     
+    </v-snackbar>
+    <div class="text-center ma-2">
+        <v-btn color="red-darken-2" @click.stop="isDialogResetOpen = true">Resetear fechas de la quincena</v-btn>
+    </div>
     <v-container>
         <v-icon color="rgba(20,20,20,0.25)" icon="mdi-information"></v-icon>
         <span style="margin-left: .5rem; color: rgba(20,20,20,0.65)">Si quiere modificar o asignar una fecha para declaracion, haga click en la opcion de editar en la fila con las fechas que desea asignar o modificar    </span> 
@@ -97,6 +124,7 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
     const isDialogFormOpen = ref(false)
     const isDialogEmpresaOpen = ref(false)
     const terminalRifSeleccionado = ref('')
+    const isDialogResetOpen = ref(false)
 
     const props = defineProps({
         quincena:Number
@@ -110,9 +138,9 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
         //CASO 1: SI LA FECHA ESTA ENTRE 3 DIAS CON LA PASADA
         if (timeDifference <= 3 && timeDifference >= 1) return 'bg-green-darken-1'
         // CASO 2: SI LA FECHA ESTA ENTRE 1 DIA CON LA PASADA
-        if(timeDifference < 1) return 'bg-yellow-darken-1'
+        if(timeDifference < 1 && timeDifference > 0) return 'bg-yellow-darken-1'
         // CASO 3: SI LA FECHA ES HOY
-        if(actualDate.getDate() === dateToCompare.getDate() && actualDate.getDate() === dateToCompare.getMonth()) return 'bg-red-darken-1'
+        if(actualDate.getDate() === dateToCompare.getDate() && actualDate.getMonth() === dateToCompare.getMonth()) return 'bg-red-darken-1'
     }
 
     const onAssignClick = (fecha: FechaImpuestos) => {
@@ -144,8 +172,11 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
         isSnackbarOpen.value = true
     }
 
-    const prepare = () => {
-        data.value = data.value.map(item=>({...item,quincena:props.quincena!} as FechaImpuestos))
+    const prepare = (useSeed = false) => {
+        const defArr = useSeed
+            ? impuestoController.defSeed().map(item=>({...item,quincena:props.quincena!} as FechaImpuestos))
+            : data.value.map(item=>({...item,quincena:props.quincena!} as FechaImpuestos))
+        data.value = defArr
         getFechas()
     }
 
@@ -155,6 +186,20 @@ import FechaImpuestoForm from './FechaImpuestoForm.vue';
             for (let i = 0; i < res.length; i++) {
                 const dataIndex = data.value.findIndex(item => item.terminal_rif === res[i].terminal_rif)
                 data.value[dataIndex] = res[i];                
+            }
+        })
+    }
+
+    const resetQuincena = () => {
+        impuestoController.Delete(props.quincena!).then(res=>{
+            if(res.ok){
+                prepare(true)
+                snackbarText.value = "Fechas de declaraciones eliminadas!"
+                isSnackbarOpen.value = true
+                isDialogResetOpen.value = false
+            } else {
+                snackbarText.value = "Hubo un error y no se pudieron eliminar las fechas de las declaraciones"
+                isSnackbarOpen.value = true
             }
         })
     }
