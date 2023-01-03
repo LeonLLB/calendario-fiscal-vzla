@@ -8,7 +8,7 @@ import (
 
 type Impuesto struct {
 	ID          uint `gorm:"primarykey" json:"id,omitempty"`
-	Quincena    uint `gorm:"notNull" json:"quincena"`
+	Quincena    uint `gorm:"notNull;uniqueIndex:unique_fecha" json:"quincena"`
 	TerminalRif uint `gorm:"notNull;uniqueIndex:unique_fecha" json:"terminalRif"`
 	Mes         uint `gorm:"notNull;uniqueIndex:unique_fecha" json:"mes"`
 	Dia         uint `gorm:"notNull" json:"dia"`
